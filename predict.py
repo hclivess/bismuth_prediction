@@ -13,10 +13,31 @@ class DbHandler():
         self.cursor = self.database.cursor()
 
 class Predictor():
+
+    def assign(self,data):
+        for part in data:
+            x = (part.split(":"))
+            print(x)
+
+    def split(self, data):
+        for part in data:
+            formatted = essentials.format_raw_tx(part)
+
+            openfield = formatted["openfield"].split(";")
+            print(openfield)
+            self.assign(openfield)
+
+
+
+
+
     def seek(self):
         db_handler.cursor.execute("SELECT * FROM transactions WHERE recipient = ? AND operation = ?",(coordinator, operation,))
-        result = db_handler.cursor.fetchall()
-        print(result)
+        results = db_handler.cursor.fetchall()
+
+        self.split(results)
+
+
 
 db_handler = DbHandler()
 predictor = Predictor()
